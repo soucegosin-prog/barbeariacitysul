@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barbearia City Sul | Agendamento</title>
+  <meta name="description" content="Barbearia City Sul em Aparecida de Goiânia. Agende seu corte online com escolha de profissional, horário e confirmação pelo WhatsApp." />
+  <style>
+    :root{
+      --bg:#06070a;
+      --bg-2:#0b0f17;
+      --card:#0f1522;
+      --card-2:#121a2b;
+      --line:rgba(255,255,255,.08);
+      --text:#f5f7fb;
+      --muted:#a9b2c7;
+      --gold:#d8b36a;
+      --gold-2:#b78532;
+      --accent:#6ea8ff;
+      --accent-2:#85f2ff;
+      --success:#27d17f;
+      --danger:#ff6666;
+      --shadow:0 20px 70px rgba(0,0,0,.35);
+      --radius:24px;
+      --radius-sm:18px;
+      --container:1200px;
+      --header-h:84px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(110,168,255,.12), transparent 30%),
+        radial-gradient(circle at 85% 20%, rgba(216,179,106,.12), transparent 28%),
+        linear-gradient(180deg, #05060a 0%, #090c13 40%, #06070a 100%);
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size:38px 38px;
+      mask-image:linear-gradient(180deg, rgba(255,255,255,.55), transparent 85%);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    button,input,select,textarea{font:inherit}
+    .container{width:min(calc(100% - 28px), var(--container)); margin-inline:auto}
+    .section{padding:92px 0}
+    .section-title{
+      display:flex;flex-direction:column;gap:14px;max-width:760px;margin-bottom:38px
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:10px;
+      width:max-content;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.03);
+      color:#d7deef;
+      font-size:.84rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .eyebrow .dot{
+      width:8px;height:8px;border-radius:999px;
+      background:linear-gradient(135deg,var(--gold),var(--accent-2));
+      box-shadow:0 0 14px rgba(216,179,106,.75);
+    }
+    h1,h2,h3,h4,p{margin:0}
+    h1{
+      font-size:clamp(2.6rem, 5vw, 5.6rem);
+      line-height:.96;
+      letter-spacing:-.05em;
+    }
+    h2{
+      font-size:clamp(2rem, 4vw, 3.6rem);
+      line-height:1;
+      letter-spacing:-.04em;
+    }
+    h3{
+      font-size:1.16rem;
+      line-height:1.2;
+      letter-spacing:-.02em;
+    }
+    p{
+      color:var(--muted);
+      line-height:1.72;
+      font-size:1rem;
+    }
+
+    .btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:16px 22px;
+      border-radius:16px;
+      transition:.28s ease;
+      font-weight:700;
+      line-height:1;
+      box-shadow:var(--shadow);
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{
+      background:linear-gradient(135deg, var(--gold), #f1d091 55%, var(--gold-2));
+      color:#101010;
+    }
+    .btn-secondary{
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      color:var(--text);
+      box-shadow:none;
+    }
+    .btn-ghost{
+      background:transparent;
+      border:1px solid rgba(255,255,255,.13);
+      color:#dce5f7;
+      box-shadow:none;
+    }
+
+    .header{
+      position:sticky;
+      top:0;
+      z-index:90;
+      height:var(--header-h);
+      backdrop-filter:blur(16px);
+      background:linear-gradient(180deg, rgba(6,7,10,.9), rgba(6,7,10,.68));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+
+    .nav{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .brand{
+      display:flex;align-items:center;gap:14px;
+      min-width:0;
+    }
+    .brand-mark{
+      width:52px;height:52px;border-radius:18px;position:relative;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.18), transparent 30%),
+        linear-gradient(135deg, #151719, #0d1016 50%, #1e2026);
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 18px 40px rgba(0,0,0,.4);
+      overflow:hidden;
+      flex-shrink:0;
+    }
+    .brand-mark::before{
+      content:"✂";
+      position:absolute; inset:0;
+      display:grid; place-items:center;
+      font-size:1.4rem;
+      color:var(--gold);
+      transform:rotate(-12deg);
+      text-shadow:0 0 18px rgba(216,179,106,.22);
+    }
+    .brand-text{
+      min-width:0;
+      display:flex;flex-direction:column;
+    }
+    .brand-text strong{
+      font-size:1rem;letter-spacing:.02em
+    }
+    .brand-text span{
+      font-size:.82rem;color:var(--muted)
+    }
+
+    .nav-links{
+      display:none;
+      align-items:center;
+      gap:24px;
+      color:#d4dcf0;
+      font-size:.95rem;
+    }
+    .nav-links a{position:relative}
+    .nav-links a::after{
+      content:"";position:absolute;left:0;bottom:-8px;width:0;height:2px;border-radius:999px;
+      background:linear-gradient(90deg, var(--gold), var(--accent-2));
+      transition:.24s ease;
+    }
+    .nav-links a:hover::after{width:100%}
+    .nav-cta{display:flex;gap:10px;align-items:center}
+
+    .hero{
+      position:relative;
+      padding:clamp(36px, 7vw, 64px) 0 90px;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(90deg, rgba(6,7,10,.88) 0%, rgba(6,7,10,.66) 42%, rgba(6,7,10,.28) 72%, rgba(6,7,10,.18) 100%),
+        radial-gradient(circle at 72% 28%, rgba(110,168,255,.18), transparent 24%);
+      z-index:1;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000"><defs><linearGradient id="g1" x1="0" x2="1" y1="0" y2="1"><stop stop-color="%230f131d"/><stop offset="1" stop-color="%231f2a43"/></linearGradient><linearGradient id="g2" x1="0" x2="1"><stop stop-color="%23d8b36a"/><stop offset="1" stop-color="%236ea8ff"/></linearGradient></defs><rect width="1600" height="1000" fill="url(%23g1)"/><rect x="0" y="0" width="1600" height="1000" fill="rgba(0,0,0,.28)"/><circle cx="1140" cy="215" r="140" fill="rgba(216,179,106,.12)"/><circle cx="1260" cy="238" r="190" fill="rgba(110,168,255,.12)"/><path d="M1138 257c-24-59-68-102-132-108-98-9-177 69-177 171v263c0 25 21 46 46 46h348c25 0 46-21 46-46V407c0-76-52-142-131-159z" fill="%23151821"/><rect x="941" y="632" width="209" height="262" rx="58" fill="%23151821"/><rect x="1045" y="632" width="209" height="262" rx="58" fill="%2313161d"/><path d="M1222 334c-36-65-102-104-176-104-52 0-99 20-135 53 25-96 112-167 216-167 123 0 224 101 224 224v108h-62c-5-42-22-80-67-114z" fill="%230b0f17"/><path d="M1138 298c-49 0-88 39-88 88s39 88 88 88 88-39 88-88-39-88-88-88z" fill="%23d0a16b"/><path d="M1090 397c6 26 24 47 48 60 24-13 42-34 48-60-17 8-33 12-48 12s-31-4-48-12z" fill="%23b37d45"/><rect x="980" y="703" width="294" height="37" rx="18.5" fill="url(%23g2)" opacity=".6"/><rect x="925" y="728" width="35" height="140" rx="17.5" fill="%23d8b36a"/><rect x="972" y="728" width="35" height="140" rx="17.5" fill="%236ea8ff"/><rect x="1019" y="728" width="35" height="140" rx="17.5" fill="%23d8b36a"/><rect x="1066" y="728" width="35" height="140" rx="17.5" fill="%236ea8ff"/><path d="M1099 240c27-35 68-56 114-56 78 0 142 64 142 142 0 39-16 74-41 100-13-80-76-142-156-154-19-3-39-2-59 3z" fill="%2308090c"/><rect x="1175" y="708" width="225" height="168" rx="28" fill="%230d1118" opacity=".72"/><rect x="1206" y="742" width="164" height="18" rx="9" fill="%23ffffff" opacity=".08"/><rect x="1206" y="778" width="123" height="18" rx="9" fill="%23ffffff" opacity=".08"/><rect x="1206" y="814" width="141" height="18" rx="9" fill="%23ffffff" opacity=".08"/></svg>') center/cover no-repeat;
+      opacity:.8;
+      transform:scale(1.02);
+      z-index:0;
+    }
+
+    .hero-grid{
+      position:relative;
+      z-index:2;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:32px;
+      align-items:end;
+      min-height:calc(100svh - var(--header-h) - 26px);
+      padding-top:32px;
+    }
+
+    .hero-copy{
+      max-width:700px;
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+    }
+
+    .hero-copy p{max-width:620px;font-size:1.04rem}
+    .hero-actions{
+      display:flex;flex-wrap:wrap;gap:12px;margin-top:6px
+    }
+
+    .hero-stats{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+      margin-top:14px;
+      max-width:600px;
+    }
+
+    .stat{
+      padding:18px 18px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      backdrop-filter:blur(10px);
+      box-shadow:var(--shadow);
+    }
+    .stat strong{display:block;font-size:1.4rem;margin-bottom:6px}
+    .stat span{color:var(--muted);font-size:.94rem}
+
+    .hero-floating{
+      display:grid;
+      gap:14px;
+      justify-self:end;
+      width:min(100%, 390px);
+    }
+    .glass-card{
+      padding:20px;
+      border-radius:28px;
+      border:1px solid rgba(255,255,255,.08);
+      background:linear-gradient(180deg, rgba(17,22,34,.86), rgba(10,14,22,.65));
+      backdrop-filter:blur(14px);
+      box-shadow:var(--shadow);
+    }
+    .hero-badge-row{
+      display:flex;gap:10px;flex-wrap:wrap;
+    }
+    .mini-badge{
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      color:#dde4f4;
+      font-size:.88rem;
+    }
+    .review-card{
+      display:flex;flex-direction:column;gap:14px
+    }
+    .review-stars{
+      letter-spacing:.18em;
+      color:var(--gold);
+      font-size:1rem;
+    }
+    .review-card p{font-size:.95rem}
+    .review-author{
+      display:flex;justify-content:space-between;gap:10px;align-items:center;
+      color:#edf2ff;font-size:.94rem
+    }
+    .review-author span{color:var(--muted);font-size:.84rem}
+
+    .cards-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px;
+    }
+
+    .service-card,
+    .feature-card,
+    .social-card,
+    .contact-card,
+    .step-card,
+    .info-card{
+      background:linear-gradient(180deg, rgba(15,21,34,.96), rgba(12,18,29,.96));
+      border:1px solid var(--line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+    }
+
+    .service-card{
+      overflow:hidden;
+      position:relative;
+      transition:.28s ease;
+      cursor:pointer;
+    }
+    .service-card:hover{transform:translateY(-4px)}
+    .service-thumb{
+      aspect-ratio:1.35/1;
+      position:relative;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(216,179,106,.16), transparent 24%),
+        radial-gradient(circle at 70% 35%, rgba(110,168,255,.16), transparent 26%),
+        linear-gradient(135deg, #121721, #0b1018 50%, #1a2233);
+    }
+    .service-thumb::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.08), transparent 30%),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420"><rect width="600" height="420" fill="transparent"/><g opacity=".8"><circle cx="415" cy="140" r="88" fill="rgba(216,179,106,.14)"/><circle cx="295" cy="102" r="78" fill="rgba(110,168,255,.12)"/><path d="M319 111c70 0 126 56 126 126v117H193V237c0-70 56-126 126-126z" fill="%230e131c"/><circle cx="319" cy="174" r="64" fill="%23cf9f68"/><path d="M261 146c24-39 71-64 119-57 34 5 64 26 82 57-19-7-40-11-61-11-19 0-48 6-74 18-29 14-43 18-66 19 3-9 0-18 0-26z" fill="%23090a0c"/><path d="M277 197c13 18 28 28 42 37 14 9 29 11 43 11s30-2 44-11c13-8 28-19 41-37-9 34-27 54-48 67-13 8-25 11-37 11-11 0-24-3-37-11-21-13-39-33-48-67z" fill="%23b37d45"/><rect x="229" y="304" width="180" height="16" rx="8" fill="%23ffffff" opacity=".08"/><rect x="229" y="332" width="130" height="16" rx="8" fill="%23ffffff" opacity=".08"/></g></svg>') center/cover no-repeat;
+      opacity:.92;
+      transform:scale(1.04);
+    }
+    .service-body{
+      padding:20px 20px 18px;
+      display:flex;flex-direction:column;gap:14px;
+    }
+    .price-row{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+    }
+    .price{
+      font-size:1.35rem;font-weight:800;letter-spacing:-.03em
+    }
+    .duration{
+      color:var(--muted);font-size:.92rem
+    }
+    .chip{
+      display:inline-flex;align-items:center;gap:8px;
+      width:max-content;
+      padding:9px 11px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      color:#dce5f8;
+      font-size:.82rem;
+    }
+    .service-card.selected,
+    .pro-card.selected,
+    .slot-btn.selected{
+      border-color:rgba(216,179,106,.58);
+      box-shadow:0 0 0 1px rgba(216,179,106,.35), 0 18px 55px rgba(0,0,0,.4);
+    }
+
+    .booking-shell{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px;
+    }
+    .step-card{
+      padding:20px;
+    }
+    .step-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:16px;
+    }
+    .step-number{
+      width:42px;height:42px;border-radius:14px;display:grid;place-items:center;flex-shrink:0;
+      background:linear-gradient(135deg, rgba(216,179,106,.2), rgba(110,168,255,.22));
+      border:1px solid rgba(255,255,255,.1);
+      font-weight:800;
+    }
+    .step-title-wrap{
+      display:flex;align-items:center;gap:12px
+    }
+    .step-subtitle{color:var(--muted);font-size:.92rem}
+    .divider{
+      height:1px;background:var(--line);margin:18px 0;
+    }
+
+    .services-mini{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:14px;
+    }
+
+    .pro-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+    .pro-card{
+      position:relative;
+      overflow:hidden;
+      padding:16px;
+      cursor:pointer;
+      transition:.28s ease;
+      background:linear-gradient(180deg, rgba(18,26,43,.95), rgba(10,14,23,.95));
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+    }
+    .pro-card:hover{transform:translateY(-4px)}
+    .pro-top{
+      display:flex;align-items:center;gap:14px;margin-bottom:14px
+    }
+    .avatar{
+      width:82px;height:82px;border-radius:50%;
+      overflow:hidden;flex-shrink:0;
+      background:linear-gradient(135deg, #1f2430, #11151d);
+      border:2px solid rgba(255,255,255,.08);
+      box-shadow:0 12px 30px rgba(0,0,0,.3);
+      position:relative;
+    }
+    .avatar svg{width:100%;height:100%;display:block}
+    .pro-meta{
+      min-width:0;display:flex;flex-direction:column;gap:6px
+    }
+    .pro-meta small{color:var(--muted)}
+    .pro-tags{
+      display:flex;flex-wrap:wrap;gap:8px
+    }
+    .tiny{
+      padding:7px 10px;border-radius:999px;font-size:.75rem;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      color:#d9e2f7;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:14px;
+    }
+    .field{
+      display:flex;flex-direction:column;gap:10px
+    }
+    .field label{
+      font-size:.92rem;
+      color:#e6ecfb;
+      font-weight:600;
+    }
+    .field input, .field select{
+      height:56px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.09);
+      background:rgba(255,255,255,.035);
+      color:var(--text);
+      padding:0 16px;
+      outline:none;
+      transition:.2s ease;
+    }
+    .field input:focus, .field select:focus{
+      border-color:rgba(216,179,106,.55);
+      box-shadow:0 0 0 4px rgba(216,179,106,.09);
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.85}
+    .hint{font-size:.82rem;color:var(--muted)}
+
+    .slots{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:10px;
+    }
+    .slot-btn{
+      height:48px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.09);
+      background:rgba(255,255,255,.035);
+      color:var(--text);
+      cursor:pointer;
+      transition:.2s ease;
+      font-weight:700;
+    }
+    .slot-btn:hover{transform:translateY(-2px)}
+    .slot-btn.disabled{
+      cursor:not-allowed;
+      opacity:.38;
+      text-decoration:line-through;
+      background:rgba(255,255,255,.03);
+    }
+
+    .summary-box{
+      display:flex;flex-direction:column;gap:12px;
+      padding:18px;
+      border-radius:20px;
+      background:linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .summary-row{
+      display:flex;justify-content:space-between;gap:14px;align-items:flex-start
+    }
+    .summary-row span:first-child{color:var(--muted)}
+    .summary-row strong{font-weight:700;text-align:right}
+    .summary-total{
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      font-size:1.1rem;
+    }
+
+    .notice{
+      padding:16px 18px;border-radius:18px;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.04);
+      color:#dbe5fb;
+      font-size:.94rem;
+    }
+    .notice strong{color:#fff}
+    .notice.success{
+      border-color:rgba(39,209,127,.28);
+      background:rgba(39,209,127,.08);
+    }
+    .notice.danger{
+      border-color:rgba(255,102,102,.28);
+      background:rgba(255,102,102,.08);
+    }
+
+    .history-grid,
+    .contact-grid,
+    .social-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px;
+    }
+
+    .feature-card,
+    .social-card,
+    .contact-card,
+    .info-card{
+      padding:24px;
+    }
+
+    .feature-icon{
+      width:52px;height:52px;border-radius:18px;display:grid;place-items:center;margin-bottom:16px;
+      background:linear-gradient(135deg, rgba(216,179,106,.16), rgba(110,168,255,.18));
+      border:1px solid rgba(255,255,255,.08);
+      font-size:1.2rem;
+    }
+
+    .story-layout{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:18px;
+    }
+    .story-visual{
+      min-height:340px;
+      border-radius:30px;
+      border:1px solid var(--line);
+      overflow:hidden;
+      position:relative;
+      background:
+        linear-gradient(180deg, rgba(6,7,10,.12), rgba(6,7,10,.68)),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900"><defs><linearGradient id="a" x1="0" x2="1" y1="0" y2="1"><stop stop-color="%230d1017"/><stop offset="1" stop-color="%23151b28"/></linearGradient><linearGradient id="b" x1="0" x2="1"><stop stop-color="%23d8b36a"/><stop offset="1" stop-color="%236ea8ff"/></linearGradient></defs><rect width="1200" height="900" fill="url(%23a)"/><rect x="120" y="120" width="960" height="660" rx="42" fill="%23090c12"/><rect x="174" y="172" width="852" height="556" rx="26" fill="%23141922"/><rect x="214" y="214" width="770" height="20" rx="10" fill="%23ffffff" opacity=".08"/><rect x="214" y="258" width="510" height="16" rx="8" fill="%23ffffff" opacity=".08"/><rect x="214" y="302" width="392" height="16" rx="8" fill="%23ffffff" opacity=".08"/><rect x="770" y="246" width="178" height="178" rx="26" fill="url(%23b)" opacity=".55"/><rect x="214" y="356" width="734" height="224" rx="28" fill="%230d1118"/><rect x="254" y="394" width="174" height="150" rx="20" fill="%23ffffff" opacity=".06"/><rect x="454" y="394" width="174" height="150" rx="20" fill="%23ffffff" opacity=".06"/><rect x="654" y="394" width="174" height="150" rx="20" fill="%23ffffff" opacity=".06"/><rect x="214" y="616" width="360" height="16" rx="8" fill="%23ffffff" opacity=".08"/><rect x="214" y="652" width="220" height="16" rx="8" fill="%23ffffff" opacity=".08"/></svg>') center/cover no-repeat;
+      box-shadow:var(--shadow);
+    }
+    .story-visual::after{
+      content:"";
+      position:absolute;inset:auto 18px 18px auto;
+      width:180px;height:180px;border-radius:999px;
+      background:radial-gradient(circle, rgba(216,179,106,.22), transparent 68%);
+      filter:blur(20px);
+    }
+
+    .map-wrap{
+      overflow:hidden;
+      border-radius:28px;
+      border:1px solid var(--line);
+      background:#0c0f15;
+      min-height:350px;
+      box-shadow:var(--shadow);
+    }
+    .map-wrap iframe{
+      width:100%;
+      height:100%;
+      min-height:350px;
+      border:0;
+      filter:grayscale(1) invert(.92) contrast(.88) brightness(.92);
+    }
+
+    .footer{
+      padding:28px 0 60px;
+      border-top:1px solid rgba(255,255,255,.06);
+      color:var(--muted);
+    }
+    .footer-row{
+      display:flex;flex-direction:column;gap:12px
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(22px);
+      transition:opacity .6s ease, transform .6s ease;
+    }
+    .reveal.show{
+      opacity:1;
+      transform:none;
+    }
+
+    .floating-wa{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:88;
+      width:62px;height:62px;border-radius:20px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg, #28d366, #179b4a);
+      box-shadow:0 18px 40px rgba(0,0,0,.35);
+      color:#fff;font-size:1.35rem;
+      border:1px solid rgba(255,255,255,.16);
+    }
+
+    .reservation-result{
+      display:none;
+      flex-direction:column;gap:14px;
+      margin-top:18px;
+      padding:20px;border-radius:24px;
+      border:1px solid rgba(39,209,127,.26);
+      background:rgba(39,209,127,.07);
+    }
+    .reservation-code{
+      display:inline-flex;
+      width:max-content;
+      padding:10px 12px;
+      border-radius:14px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.08);
+      font-weight:800;
+      letter-spacing:.08em;
+    }
+    .reservation-actions{
+      display:flex;flex-wrap:wrap;gap:12px
+    }
+
+    .cancel-layout{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:14px;
+      align-items:end;
+    }
+
+    @media (min-width:700px){
+      .services-mini{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .cards-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .history-grid,.contact-grid,.social-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .booking-shell{grid-template-columns:1.15fr .85fr}
+      .form-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .slots{grid-template-columns:repeat(4, minmax(0,1fr))}
+      .cancel-layout{grid-template-columns:1fr 1fr auto}
+      .footer-row{flex-direction:row;justify-content:space-between;align-items:center}
+    }
+
+    @media (min-width:960px){
+      .nav-links{display:flex}
+      .hero-grid{grid-template-columns:1.08fr .92fr}
+      .cards-grid{grid-template-columns:repeat(4, minmax(0,1fr))}
+      .services-mini{grid-template-columns:repeat(3, minmax(0,1fr))}
+      .history-grid{grid-template-columns:1.1fr .9fr}
+      .story-layout{grid-template-columns:1fr 1fr}
+      .social-grid{grid-template-columns:repeat(3, minmax(0,1fr))}
+      .contact-grid{grid-template-columns:1fr 1fr}
+      .pro-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
+    }
+
+    @media (max-width:560px){
+      .nav-cta .btn-secondary{display:none}
+      .hero-stats{grid-template-columns:1fr}
+      .pro-grid{grid-template-columns:1fr}
+      .slots{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .btn{width:100%}
+      .hero-actions{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a href="#inicio" class="brand" aria-label="Barbearia City Sul">
+       <div class="brand-mark">
+  <img src="logocity.jpg" alt="Barbearia City Sul" style="width:100%;height:100%;object-fit:cover;border-radius:18px;">
+</div>
+        <div class="brand-text">
+          <strong>Barbearia City Sul</strong>
+          <span>Aparecida de Goiânia • Alto padrão técnico</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="#agendamento">Agendar</a>
+        <a href="#profissionais">Profissionais</a>
+        <a href="#historia">História</a>
+        <a href="#contato">Contato</a>
+        <a href="#localizacao">Localização</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a href="https://www.instagram.com/barbearia_citysul/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Instagram</a>
+        <a href="#agendamento" class="btn btn-primary">Agendar agora</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">
+            <span class="dot"></span>
+            <span>5.066 avaliações • atendimento de excelência</span>
+          </div>
+
+          <h1>Seu corte com presença, precisão e padrão premium.</h1>
+
+          <p>
+            A Barbearia City Sul entrega técnica, agilidade e experiência de alto nível em Aparecida de Goiânia.
+            Escolha o serviço, selecione o barbeiro, agende seu horário e confirme tudo pelo WhatsApp em poucos cliques.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#agendamento" class="btn btn-primary">Agendar horário</a>
+            <a href="#profissionais" class="btn btn-ghost">Escolher profissional</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>+5 mil</strong>
+              <span>Avaliações e prova social forte no Google</span>
+            </div>
+            <div class="stat">
+              <strong>R$ 35</strong>
+              <span>A partir do degradê navalhado</span>
+            </div>
+            <div class="stat">
+              <strong>04</strong>
+              <span>Profissionais para você escolher</span>
+            </div>
+            <div class="stat">
+              <strong>WhatsApp</strong>
+              <span>Confirmação prática e rápida de agendamento</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-floating reveal">
+          <div class="glass-card">
+            <div class="hero-badge-row">
+              <div class="mini-badge">Cortes premium</div>
+              <div class="mini-badge">Barba & acabamento</div>
+              <div class="mini-badge">Agendamento online</div>
+            </div>
+          </div>
+
+          <div class="glass-card review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>“Fui muito bem recepcionado, lugar muito bom e ótimos profissionais!!!”</p>
+            <div class="review-author">
+              <strong>HAXIXEZIN FF</strong>
+              <span>Cliente</span>
+            </div>
+          </div>
+
+          <div class="glass-card review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>“Ótimo profissional, ambiente agradável.”</p>
+            <div class="review-author">
+              <strong>Pedro Itacaramby</strong>
+              <span>Cliente</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cortes">
+      <div class="container">
+        <div class="section-title reveal">
+          <div class="eyebrow"><span class="dot"></span><span>Serviços</span></div>
+          <h2>Cortes e combos para agendar.</h2>
+          <p>Escolha o serviço ideal e avance para selecionar o barbeiro, a data e o horário.</p>
+        </div>
+
+        <div class="cards-grid">
+          <article class="service-card reveal" data-service-id="degrade" data-name="Degradê Navalhado" data-price="35" data-duration="45">
+            <div class="service-thumb"></div>
+            <div class="service-body">
+              <div class="chip">Mais procurado</div>
+              <div>
+                <h3>Degradê Navalhado</h3>
+                <p>Acabamento preciso, laterais marcadas e visual moderno.</p>
+              </div>
+              <div class="price-row">
+                <div>
+                  <div class="price">R$ 35,00</div>
+                  <div class="duration">45 min</div>
+                </div>
+                <a href="#agendamento" class="btn btn-secondary">Agendar</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-card reveal" data-service-id="corte" data-name="Corte Tradicional" data-price="35" data-duration="40">
+            <div class="service-thumb"></div>
+            <div class="service-body">
+              <div class="chip">Clássico</div>
+              <div>
+                <h3>Corte Tradicional</h3>
+                <p>Estilo limpo, alinhado e sob medida para o seu perfil.</p>
+              </div>
+              <div class="price-row">
+                <div>
+                  <div class="price">R$ 35,00</div>
+                  <div class="duration">40 min</div>
+                </div>
+                <a href="#agendamento" class="btn btn-secondary">Agendar</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-card reveal" data-service-id="corte_barba" data-name="Corte + Barba" data-price="55" data-duration="60">
+            <div class="service-thumb"></div>
+            <div class="service-body">
+              <div class="chip">Combo premium</div>
+              <div>
+                <h3>Corte + Barba</h3>
+                <p>Visual completo com barba desenhada e acabamento refinado.</p>
+              </div>
+              <div class="price-row">
+                <div>
+                  <div class="price">R$ 55,00</div>
+                  <div class="duration">60 min</div>
+                </div>
+                <a href="#agendamento" class="btn btn-secondary">Agendar</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="service-card reveal" data-service-id="barba" data-name="Barba Premium" data-price="25" data-duration="25">
+            <div class="service-thumb"></div>
+            <div class="service-body">
+              <div class="chip">Precisão</div>
+              <div>
+                <h3>Barba Premium</h3>
+                <p>Desenho, alinhamento e presença para um resultado impecável.</p>
+              </div>
+              <div class="price-row">
+                <div>
+                  <div class="price">R$ 25,00</div>
+                  <div class="duration">25 min</div>
+                </div>
+                <a href="#agendamento" class="btn btn-secondary">Agendar</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="agendamento">
+      <div class="container">
+        <div class="section-title reveal">
+          <div class="eyebrow"><span class="dot"></span><span>Agendamento</span></div>
+          <h2>Agende em poucos cliques.</h2>
+          <p>Escolha o corte, selecione o profissional, defina a data e o horário, e confirme tudo pelo WhatsApp.</p>
+        </div>
+
+        <div class="booking-shell">
+          <div class="step-card reveal">
+            <div class="step-head">
+              <div class="step-title-wrap">
+                <div class="step-number">1</div>
+                <div>
+                  <h3>Escolha o serviço</h3>
+                  <div class="step-subtitle">Selecione o corte que deseja agendar.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="services-mini" id="bookingServices"></div>
+
+            <div class="divider"></div>
+
+            <div class="step-head">
+              <div class="step-title-wrap">
+                <div class="step-number">2</div>
+                <div>
+                  <h3>Escolha o profissional</h3>
+                  <div class="step-subtitle">Selecione quem vai realizar seu atendimento.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pro-grid" id="proGrid"></div>
+
+            <div class="divider"></div>
+
+            <div class="step-head">
+              <div class="step-title-wrap">
+                <div class="step-number">3</div>
+                <div>
+                  <h3>Preencha seus dados</h3>
+                  <div class="step-subtitle">Informe nome, contato, data e horário.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="clientName">Nome completo</label>
+                <input type="text" id="clientName" placeholder="Digite seu nome" />
+              </div>
+              <div class="field">
+                <label for="clientPhone">Contato / WhatsApp</label>
+                <input type="tel" id="clientPhone" placeholder="(62) 99999-9999" maxlength="16" />
+              </div>
+              <div class="field">
+                <label for="bookingDate">Data do agendamento</label>
+                <input type="date" id="bookingDate" />
+                <div class="hint">Agendamentos disponíveis até 31/12/2026.</div>
+              </div>
+              <div class="field">
+                <label for="bookingNotes">Observação</label>
+                <input type="text" id="bookingNotes" placeholder="Opcional" />
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="step-head">
+              <div class="step-title-wrap">
+                <div class="step-number">4</div>
+                <div>
+                  <h3>Escolha o horário</h3>
+                  <div class="step-subtitle">Os horários ocupados ficam indisponíveis neste navegador.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="slots" id="slots"></div>
+
+            <div class="divider"></div>
+
+            <div class="notice">
+              <strong>Cancelamento:</strong> depois de confirmar, você pode cancelar em até 15 minutos usando o código da reserva.
+            </div>
+
+            <div class="reservation-result" id="reservationResult">
+              <h3>Agendamento criado</h3>
+              <p>Seu horário foi reservado neste navegador. Agora é só confirmar no WhatsApp da barbearia.</p>
+              <div class="reservation-code" id="reservationCode"></div>
+              <div class="reservation-actions">
+                <a id="waConfirmLink" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Confirmar no WhatsApp</a>
+                <button id="copyCodeBtn" class="btn btn-secondary" type="button">Copiar código</button>
+              </div>
+            </div>
+          </div>
+
+          <aside class="step-card reveal">
+            <div class="step-head">
+              <div class="step-title-wrap">
+                <div class="step-number">5</div>
+                <div>
+                  <h3>Resumo do agendamento</h3>
+                  <div class="step-subtitle">Revise antes de confirmar.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="summary-box" id="summaryBox">
+              <div class="summary-row">
+                <span>Serviço</span>
+                <strong id="summaryService">Selecione um corte</strong>
+              </div>
+              <div class="summary-row">
+                <span>Profissional</span>
+                <strong id="summaryPro">Selecione um barbeiro</strong>
+              </div>
+              <div class="summary-row">
+                <span>Data</span>
+                <strong id="summaryDate">Escolha uma data</strong>
+              </div>
+              <div class="summary-row">
+                <span>Horário</span>
+                <strong id="summaryTime">Escolha um horário</strong>
+              </div>
+              <div class="summary-row">
+                <span>Cliente</span>
+                <strong id="summaryClient">Preencha seu nome</strong>
+              </div>
+              <div class="summary-row">
+                <span>Contato</span>
+                <strong id="summaryPhone">Preencha seu contato</strong>
+              </div>
+              <div class="summary-row summary-total">
+                <span>Total</span>
+                <strong id="summaryPrice">R$ 0,00</strong>
+              </div>
+            </div>
+
+            <div style="height:16px"></div>
+
+            <button class="btn btn-primary" id="confirmBookingBtn" type="button">Reservar e abrir WhatsApp</button>
+
+            <div style="height:14px"></div>
+
+            <div class="notice">
+              <strong>Importante:</strong> se você trocar o barbeiro ou a data, os horários são recalculados automaticamente.
+            </div>
+
+            <div class="divider"></div>
+
+            <h3 style="margin-bottom:14px">Cancelar agendamento</h3>
+
+            <div class="cancel-layout">
+              <div class="field">
+                <label for="cancelCode">Código da reserva</label>
+                <input type="text" id="cancelCode" placeholder="Ex.: CS-4F8A92" />
+              </div>
+              <div class="field">
+                <label for="cancelPhone">Contato usado na reserva</label>
+                <input type="tel" id="cancelPhone" placeholder="(62) 99999-9999" maxlength="16" />
+              </div>
+              <button class="btn btn-secondary" id="cancelBookingBtn" type="button">Cancelar</button>
+            </div>
+
+            <div style="height:14px"></div>
+            <div id="cancelNotice" class="notice" style="display:none"></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="profissionais">
+      <div class="container">
+        <div class="section-title reveal">
+          <div class="eyebrow"><span class="dot"></span><span>Equipe</span></div>
+          <h2>Escolha seu barbeiro.</h2>
+          <p>Profissionais com estilo próprio, técnica refinada e atendimento pensado para valorizar seu visual.</p>
+        </div>
+
+        <div class="cards-grid">
+          <article class="feature-card reveal">
+            <div class="feature-icon">✂</div>
+            <h3 style="margin-bottom:10px">Rafael Costa</h3>
+            <p>Especialista em degradê, acabamento de navalha e cortes de presença com visual moderno.</p>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-icon">🧔</div>
+            <h3 style="margin-bottom:10px">Lucas Mendes</h3>
+            <p>Forte em barba desenhada, alinhamento facial e combos completos com alta precisão.</p>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-icon">🔥</div>
+            <h3 style="margin-bottom:10px">João Victor</h3>
+            <p>Referência em cortes atuais, texturizados e estilos que destacam personalidade.</p>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-icon">⚡</div>
+            <h3 style="margin-bottom:10px">Thiago Alves</h3>
+            <p>Atendimento rápido, acabamento limpo e experiência premium do início ao fim.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="historia">
+      <div class="container story-layout">
+        <div class="story-visual reveal"></div>
+
+        <div class="info-card reveal" style="padding:28px">
+          <div class="eyebrow"><span class="dot"></span><span>Nossa história</span></div>
+          <div style="height:16px"></div>
+          <h2>Barbearia com identidade, técnica e presença.</h2>
+          <div style="height:16px"></div>
+          <p>
+            A Barbearia City Sul nasceu com uma proposta clara: entregar mais do que um corte, mas uma experiência de respeito,
+            padrão técnico alto e visual marcante. Aqui, cada atendimento é pensado para valorizar sua imagem com precisão,
+            agilidade e acabamento premium.
+          </p>
+          <div style="height:14px"></div>
+          <p>
+            Com ambiente agradável, equipe preparada e uma base forte de clientes satisfeitos, a City Sul se consolidou como
+            referência para quem busca corte bem executado, barba alinhada e atendimento de excelência em Aparecida de Goiânia.
+          </p>
+          <div style="height:24px"></div>
+
+          <div class="history-grid">
+            <div class="feature-card" style="padding:22px">
+              <div class="feature-icon">★</div>
+              <h3 style="margin-bottom:10px">Atendimento de excelência</h3>
+              <p>Recepção, cuidado e padrão profissional do começo ao fim.</p>
+            </div>
+            <div class="feature-card" style="padding:22px">
+              <div class="feature-icon">⌛</div>
+              <h3 style="margin-bottom:10px">Agilidade no corte</h3>
+              <p>Horários organizados e atendimento prático sem perder qualidade.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="redes">
+      <div class="container">
+        <div class="section-title reveal">
+          <div class="eyebrow"><span class="dot"></span><span>Redes sociais</span></div>
+          <h2>Acompanhe a City Sul.</h2>
+          <p>Veja resultados, acompanhe o dia a dia da barbearia e entre em contato direto.</p>
+        </div>
+
+        <div class="social-grid">
+          <article class="social-card reveal">
+            <h3 style="margin-bottom:10px">Instagram</h3>
+            <p style="margin-bottom:18px">Conteúdo, cortes, novidades e atendimento direto no perfil oficial.</p>
+            <a class="btn btn-secondary" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/barbearia_citysul/">Abrir Instagram</a>
+          </article>
+          <article class="social-card reveal">
+            <h3 style="margin-bottom:10px">WhatsApp</h3>
+            <p style="margin-bottom:18px">Fale com a barbearia para confirmar, remarcar ou tirar dúvidas rapidamente.</p>
+            <a class="btn btn-secondary" target="_blank" rel="noopener noreferrer" href="https://wa.me/5562998541049">Chamar no WhatsApp</a>
+          </article>
+          <article class="social-card reveal">
+            <h3 style="margin-bottom:10px">Google</h3>
+            <p style="margin-bottom:18px">Uma base forte de avaliações que reforça a confiança e a qualidade do serviço.</p>
+            <a class="btn btn-secondary" href="#localizacao">Ver localização</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contato">
+      <div class="container">
+        <div class="section-title reveal">
+          <div class="eyebrow"><span class="dot"></span><span>Contato</span></div>
+          <h2>Informações da barbearia.</h2>
+          <p>Horário, endereço, telefone e acesso rápido aos principais canais.</p>
+        </div>
+
+        <div class="contact-grid">
+          <article class="contact-card reveal">
+            <h3 style="margin-bottom:18px">Contato direto</h3>
+            <p><strong style="color:#fff">Telefone / WhatsApp:</strong> (62) 99854-1049</p>
+            <div style="height:10px"></div>
+            <p><strong style="color:#fff">Instagram:</strong> @barbearia_citysul</p>
+            <div style="height:10px"></div>
+            <p><strong style="color:#fff">Endereço:</strong> Av. José Leandro da Cruz, Q72 - LT07 sala 05, Jardim Luz, Aparecida de Goiânia - GO, 74915-130</p>
+          </article>
+
+          <article class="contact-card reveal">
+            <h3 style="margin-bottom:18px">Horário de funcionamento</h3>
+            <p>Segunda a sábado com agenda organizada diretamente pelo site e confirmação pelo WhatsApp.</p>
+            <div style="height:14px"></div>
+            <div class="notice">
+              <strong>Observação:</strong> o horário exibido para agendamento segue a disponibilidade montada no sistema do site.
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="localizacao">
+      <div class="container">
+        <div class="section-title reveal">
+          <div class="eyebrow"><span class="dot"></span><span>Localização</span></div>
+          <h2>Venha para a City Sul.</h2>
+          <p>Fácil acesso em Aparecida de Goiânia, com ambiente preparado para receber você com conforto e alto padrão.</p>
+        </div>
+
+        <div class="map-wrap reveal">
+          <iframe
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Av.%20Jos%C3%A9%20Leandro%20da%20Cruz,%20Q72%20-%20LT07%20sala%2005,%20Jardim%20Luz,%20Aparecida%20de%20Goi%C3%A2nia%20-%20GO,%2074915-130&output=embed">
+          </iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a class="floating-wa" href="https://wa.me/5562998541049" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp da Barbearia City Sul">✆</a>
+
+  <footer class="footer">
+    <div class="container footer-row">
+      <div>© <span id="yearNow"></span> Barbearia City Sul. Todos os direitos reservados.</div>
+      <div>Feito para valorizar a presença da marca e facilitar o agendamento.</div>
+    </div>
+  </footer>
+
+  <script>
+    const WHATSAPP_NUMBER = "5562998541049";
+    const LAST_BOOKING_KEY = "citysul_last_booking";
+    const STORAGE_KEY = "citysul_bookings_2026";
+
+    const services = [
+      { id: "degrade", name: "Degradê Navalhado", price: 35, duration: 45, tag: "Mais procurado" },
+      { id: "corte", name: "Corte Tradicional", price: 35, duration: 40, tag: "Clássico" },
+      { id: "corte_barba", name: "Corte + Barba", price: 55, duration: 60, tag: "Combo premium" },
+      { id: "barba", name: "Barba Premium", price: 25, duration: 25, tag: "Precisão" }
+    ];
+
+    const pros = [
+      {
+        id: "rafael",
+        name: "Rafael Costa",
+        role: "Especialista em degradê",
+        tags: ["Degradê", "Navalha", "Acabamento"],
+        svg: `
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="bg1" x1="0" x2="1" y1="0" y2="1">
+                <stop stop-color="#1f2430"/><stop offset="1" stop-color="#11151d"/>
+              </linearGradient>
+            </defs>
+            <rect width="100" height="100" fill="url(#bg1)"/>
+            <circle cx="76" cy="25" r="18" fill="rgba(216,179,106,.18)"/>
+            <circle cx="50" cy="42" r="22" fill="#cf9f68"/>
+            <path d="M29 38c2-16 17-27 34-24 12 2 22 10 27 21-10-3-18-4-25-3-12 0-22 4-36 13z" fill="#090a0c"/>
+            <path d="M41 53c3 7 10 12 9 18-1 5-5 8-11 11 3 2 7 3 11 3h11c5 0 8-1 11-3-6-3-10-6-11-11-1-6 6-11 9-18-5 4-12 6-20 6-7 0-14-2-19-6z" fill="#9b6436"/>
+            <rect x="27" y="66" width="46" height="28" rx="13" fill="#171b24"/>
+          </svg>`
+      },
+      {
+        id: "lucas",
+        name: "Lucas Mendes",
+        role: "Barba e combo completo",
+        tags: ["Barba", "Combo", "Precisão"],
+        svg: `
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="bg2" x1="0" x2="1">
+                <stop stop-color="#0f1522"/><stop offset="1" stop-color="#1b2840"/>
+              </linearGradient>
+            </defs>
+            <rect width="100" height="100" fill="url(#bg2)"/>
+            <circle cx="24" cy="24" r="16" fill="rgba(110,168,255,.16)"/>
+            <circle cx="50" cy="41" r="21" fill="#d2a06b"/>
+            <path d="M31 37c6-14 18-21 32-21 12 0 23 5 30 15-12-1-23 1-32 5-10 4-16 8-30 12z" fill="#090a0c"/>
+            <path d="M35 54c6 16 18 25 15 31h0c0 0 15 0 15 0 0 0 0 0 0 0-3-6 9-15 15-31-8 5-14 7-22 7s-14-2-23-7z" fill="#73431f"/>
+            <rect x="25" y="66" width="50" height="30" rx="15" fill="#151a24"/>
+          </svg>`
+      },
+      {
+        id: "joao",
+        name: "João Victor",
+        role: "Cortes modernos",
+        tags: ["Textura", "Estilo", "Atual"],
+        svg: `
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="bg3" x1="0" x2="1" y1="0" y2="1">
+                <stop stop-color="#141922"/><stop offset="1" stop-color="#0a0d14"/>
+              </linearGradient>
+            </defs>
+            <rect width="100" height="100" fill="url(#bg3)"/>
+            <circle cx="76" cy="74" r="15" fill="rgba(216,179,106,.14)"/>
+            <circle cx="50" cy="42" r="21" fill="#d4a46f"/>
+            <path d="M28 41c4-18 21-28 38-26 11 1 21 6 28 16-11-2-22-1-31 3-8 4-17 7-35 7z" fill="#0a0b0d"/>
+            <path d="M37 54c5 8 12 12 13 18 1 4-3 8-7 11h14 4c4-3 8-7 7-11 1-6 8-10 13-18-8 5-15 7-22 7-8 0-15-2-22-7z" fill="#8e5a2d"/>
+            <rect x="26" y="66" width="48" height="30" rx="15" fill="#171d28"/>
+          </svg>`
+      },
+      {
+        id: "thiago",
+        name: "Thiago Alves",
+        role: "Agilidade e acabamento",
+        tags: ["Rápido", "Limpo", "Premium"],
+        svg: `
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="bg4" x1="0" x2="1">
+                <stop stop-color="#0c1018"/><stop offset="1" stop-color="#202838"/>
+              </linearGradient>
+            </defs>
+            <rect width="100" height="100" fill="url(#bg4)"/>
+            <circle cx="20" cy="75" r="16" fill="rgba(110,168,255,.12)"/>
+            <circle cx="50" cy="41" r="21" fill="#cf9e67"/>
+            <path d="M29 39c4-16 18-25 35-23 12 2 22 8 28 19-10-2-18-1-28 2-10 3-16 6-35 12 0-3-1-6 0-10z" fill="#090a0c"/>
+            <path d="M36 54c4 11 11 16 13 21 1 5-1 7-5 10h12 7c4-3 6-5 5-10 2-5 9-10 13-21-8 5-15 7-23 7s-14-2-22-7z" fill="#7d4b24"/>
+            <rect x="26" y="66" width="48" height="31" rx="16" fill="#151a23"/>
+          </svg>`
+      }
+    ];
+
+    const state = {
+      selectedServiceId: null,
+      selectedProId: null,
+      selectedDate: "",
+      selectedTime: "",
+      bookingId: null
+    };
+
+    const bookingServices = document.getElementById("bookingServices");
+    const proGrid = document.getElementById("proGrid");
+    const slotsEl = document.getElementById("slots");
+
+    const clientName = document.getElementById("clientName");
+    const clientPhone = document.getElementById("clientPhone");
+    const bookingDate = document.getElementById("bookingDate");
+    const bookingNotes = document.getElementById("bookingNotes");
+    const confirmBookingBtn = document.getElementById("confirmBookingBtn");
+    const cancelBookingBtn = document.getElementById("cancelBookingBtn");
+    const cancelCode = document.getElementById("cancelCode");
+    const cancelPhone = document.getElementById("cancelPhone");
+    const cancelNotice = document.getElementById("cancelNotice");
+
+    const summaryService = document.getElementById("summaryService");
+    const summaryPro = document.getElementById("summaryPro");
+    const summaryDate = document.getElementById("summaryDate");
+    const summaryTime = document.getElementById("summaryTime");
+    const summaryClient = document.getElementById("summaryClient");
+    const summaryPhone = document.getElementById("summaryPhone");
+    const summaryPrice = document.getElementById("summaryPrice");
+
+    const reservationResult = document.getElementById("reservationResult");
+    const reservationCode = document.getElementById("reservationCode");
+    const waConfirmLink = document.getElementById("waConfirmLink");
+    const copyCodeBtn = document.getElementById("copyCodeBtn");
+
+    document.getElementById("yearNow").textContent = new Date().getFullYear();
+
+    function brl(value){
+      return value.toLocaleString("pt-BR", {style:"currency", currency:"BRL"});
+    }
+
+    function formatPhone(value){
+      const digits = value.replace(/\D/g, "").slice(0, 11);
+      if(digits.length <= 10){
+        return digits
+          .replace(/^(\d{2})(\d)/g, "($1) $2")
+          .replace(/(\d{4})(\d)/, "$1-$2");
+      }
+      return digits
+        .replace(/^(\d{2})(\d)/g, "($1) $2")
+        .replace(/(\d{5})(\d)/, "$1-$2");
+    }
+
+    function onlyDigits(value){
+      return value.replace(/\D/g, "");
+    }
+
+    function slugCode(){
+      return "CS-" + Math.random().toString(16).slice(2, 8).toUpperCase();
+    }
+
+    function getBookings(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      }catch(e){
+        return [];
+      }
+    }
+
+    function setBookings(data){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function getSelectedService(){
+      return services.find(s => s.id === state.selectedServiceId) || null;
+    }
+
+    function getSelectedPro(){
+      return pros.find(p => p.id === state.selectedProId) || null;
+    }
+
+    function isValidDateRange(dateStr){
+      if(!dateStr) return false;
+      const selected = new Date(dateStr + "T00:00:00");
+      const min = new Date();
+      min.setHours(0,0,0,0);
+      const max = new Date("2026-12-31T23:59:59");
+      return selected >= min && selected <= max;
+    }
+
+    function dateLabel(dateStr){
+      if(!dateStr) return "Escolha uma data";
+      const [y,m,d] = dateStr.split("-");
+      return `${d}/${m}/${y}`;
+    }
+
+    function timeToMinutes(t){
+      const [h,m] = t.split(":").map(Number);
+      return h * 60 + m;
+    }
+
+    function minutesToTime(total){
+      const h = String(Math.floor(total / 60)).padStart(2, "0");
+      const m = String(total % 60).padStart(2, "0");
+      return `${h}:${m}`;
+    }
+
+    function generateSlots(){
+      const times = [];
+      for(let min = 8 * 60; min <= 19 * 60; min += 30){
+        times.push(minutesToTime(min));
+      }
+      return times;
+    }
+
+    function overlaps(startA, durA, startB, durB){
+      const a1 = timeToMinutes(startA);
+      const a2 = a1 + durA;
+      const b1 = timeToMinutes(startB);
+      const b2 = b1 + durB;
+      return a1 < b2 && b1 < a2;
+    }
+
+    function isSlotBooked(date, proId, time, duration){
+      const bookings = getBookings().filter(b => !b.cancelled);
+      return bookings.some(b =>
+        b.date === date &&
+        b.proId === proId &&
+        overlaps(time, duration, b.time, b.duration)
+      );
+    }
+
+    function renderBookingServices(){
+      bookingServices.innerHTML = services.map(service => `
+        <button type="button"
+          class="service-card ${state.selectedServiceId === service.id ? "selected" : ""}"
+          data-service-btn="${service.id}"
+          style="text-align:left">
+          <div class="service-body">
+            <div class="chip">${service.tag}</div>
+            <div>
+              <h3>${service.name}</h3>
+              <p>${service.duration} min</p>
+            </div>
+            <div class="price-row">
+              <div class="price">${brl(service.price)}</div>
+              <div class="duration">Selecionar</div>
+            </div>
+          </div>
+        </button>
+      `).join("");
+
+      document.querySelectorAll("[data-service-btn]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          state.selectedServiceId = btn.dataset.serviceBtn;
+          state.selectedTime = "";
+          renderBookingServices();
+          renderSlots();
+          updateSummary();
+        });
+      });
+
+      document.querySelectorAll(".service-card[data-service-id]").forEach(card => {
+        card.addEventListener("click", () => {
+          state.selectedServiceId = card.dataset.serviceId;
+          state.selectedTime = "";
+          renderBookingServices();
+          renderSlots();
+          updateSummary();
+        });
+      });
+
+      document.querySelectorAll(".service-card[data-service-id] .btn").forEach(btn => {
+        btn.addEventListener("click", e => {
+          e.preventDefault();
+          const card = e.currentTarget.closest(".service-card");
+          state.selectedServiceId = card.dataset.serviceId;
+          state.selectedTime = "";
+          renderBookingServices();
+          renderSlots();
+          updateSummary();
+          document.getElementById("agendamento").scrollIntoView({behavior:"smooth", block:"start"});
+        });
+      });
+    }
+
+    function renderPros(){
+      proGrid.innerHTML = pros.map(pro => `
+        <button type="button" class="pro-card ${state.selectedProId === pro.id ? "selected" : ""}" data-pro-btn="${pro.id}">
+          <div class="pro-top">
+            <div class="avatar">${pro.svg}</div>
+            <div class="pro-meta">
+              <h3>${pro.name}</h3>
+              <small>${pro.role}</small>
+            </div>
+          </div>
+          <div class="pro-tags">
+            ${pro.tags.map(tag => `<span class="tiny">${tag}</span>`).join("")}
+          </div>
+        </button>
+      `).join("");
+
+      document.querySelectorAll("[data-pro-btn]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          state.selectedProId = btn.dataset.proBtn;
+          state.selectedTime = "";
+          renderPros();
+          renderSlots();
+          updateSummary();
+        });
+      });
+    }
+
+    function renderSlots(){
+      const selectedService = getSelectedService();
+      const date = bookingDate.value;
+      const proId = state.selectedProId;
+      const slots = generateSlots();
+
+      slotsEl.innerHTML = slots.map(time => {
+        const disabled = !selectedService || !date || !proId || !isValidDateRange(date) || isSlotBooked(date, proId, time, selectedService.duration);
+        const selected = state.selectedTime === time;
+        return `<button type="button" class="slot-btn ${disabled ? "disabled" : ""} ${selected ? "selected" : ""}" ${disabled ? "disabled" : ""} data-slot="${time}">${time}</button>`;
+      }).join("");
+
+      document.querySelectorAll("[data-slot]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          if(btn.disabled) return;
+          state.selectedTime = btn.dataset.slot;
+          renderSlots();
+          updateSummary();
+        });
+      });
+    }
+
+    function updateSummary(){
+      const service = getSelectedService();
+      const pro = getSelectedPro();
+
+      summaryService.textContent = service ? service.name : "Selecione um corte";
+      summaryPro.textContent = pro ? pro.name : "Selecione um barbeiro";
+      summaryDate.textContent = state.selectedDate ? dateLabel(state.selectedDate) : "Escolha uma data";
+      summaryTime.textContent = state.selectedTime || "Escolha um horário";
+      summaryClient.textContent = clientName.value.trim() || "Preencha seu nome";
+      summaryPhone.textContent = clientPhone.value.trim() || "Preencha seu contato";
+      summaryPrice.textContent = service ? brl(service.price) : "R$ 0,00";
+    }
+
+    function validateBooking(){
+      const service = getSelectedService();
+      const pro = getSelectedPro();
+      const name = clientName.value.trim();
+      const phone = onlyDigits(clientPhone.value);
+      const date = bookingDate.value;
+      const time = state.selectedTime;
+
+      if(!service) return {ok:false, msg:"Selecione um serviço."};
+      if(!pro) return {ok:false, msg:"Selecione um profissional."};
+      if(name.length < 3) return {ok:false, msg:"Digite seu nome completo."};
+      if(phone.length < 10) return {ok:false, msg:"Digite um contato válido."};
+      if(!isValidDateRange(date)) return {ok:false, msg:"Escolha uma data válida até 31/12/2026."};
+      if(!time) return {ok:false, msg:"Selecione um horário."};
+      if(isSlotBooked(date, pro.id, time, service.duration)) return {ok:false, msg:"Esse horário acabou de ficar indisponível. Escolha outro."};
+
+      return {ok:true};
+    }
+
+    function buildWhatsAppMessage(booking){
+      const text = [
+        "Olá, Barbearia City Sul. Quero confirmar meu agendamento:",
+        "",
+        `• Código: ${booking.id}`,
+        `• Nome: ${booking.name}`,
+        `• Contato: ${booking.phoneFormatted}`,
+        `• Serviço: ${booking.serviceName}`,
+        `• Profissional: ${booking.proName}`,
+        `• Data: ${dateLabel(booking.date)}`,
+        `• Horário: ${booking.time}`,
+        `• Valor: ${brl(booking.price)}`,
+        booking.notes ? `• Observação: ${booking.notes}` : null,
+        "",
+        "Agendamento feito pelo site."
+      ].filter(Boolean).join("\n");
+
+      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+    }
+
+    function saveBooking(){
+      const valid = validateBooking();
+      if(!valid.ok){
+        showToast(valid.msg, "danger");
+        return;
+      }
+
+      const service = getSelectedService();
+      const pro = getSelectedPro();
+      const id = slugCode();
+      const booking = {
+        id,
+        createdAt: Date.now(),
+        name: clientName.value.trim(),
+        phone: onlyDigits(clientPhone.value),
+        phoneFormatted: clientPhone.value.trim(),
+        serviceId: service.id,
+        serviceName: service.name,
+        price: service.price,
+        duration: service.duration,
+        proId: pro.id,
+        proName: pro.name,
+        date: bookingDate.value,
+        time: state.selectedTime,
+        notes: bookingNotes.value.trim(),
+        cancelled: false
+      };
+
+      const bookings = getBookings();
+      bookings.push(booking);
+      setBookings(bookings);
+      localStorage.setItem(LAST_BOOKING_KEY, JSON.stringify(booking));
+
+      state.bookingId = id;
+      reservationCode.textContent = id;
+      waConfirmLink.href = buildWhatsAppMessage(booking);
+      reservationResult.style.display = "flex";
+      renderSlots();
+      showToast("Agendamento criado. Agora confirme no WhatsApp.", "success");
+      reservationResult.scrollIntoView({behavior:"smooth", block:"center"});
+    }
+
+    function cancelBooking(){
+      const code = cancelCode.value.trim().toUpperCase();
+      const phone = onlyDigits(cancelPhone.value);
+
+      if(!code || phone.length < 10){
+        setCancelNotice("Informe o código da reserva e o contato usado no agendamento.", "danger");
+        return;
+      }
+
+      const bookings = getBookings();
+      const index = bookings.findIndex(b => b.id === code && b.phone === phone && !b.cancelled);
+
+      if(index === -1){
+        setCancelNotice("Reserva não encontrada neste navegador.", "danger");
+        return;
+      }
+
+      const booking = bookings[index];
+      const elapsed = Date.now() - booking.createdAt;
+      const maxWindow = 15 * 60 * 1000;
+
+      if(elapsed > maxWindow){
+        setCancelNotice("O prazo de 15 minutos para cancelamento já expirou.", "danger");
+        return;
+      }
+
+      bookings[index].cancelled = true;
+      bookings[index].cancelledAt = Date.now();
+      setBookings(bookings);
+      renderSlots();
+      setCancelNotice("Agendamento cancelado com sucesso.", "success");
+    }
+
+    function setCancelNotice(message, type){
+      cancelNotice.style.display = "block";
+      cancelNotice.className = "notice " + (type === "success" ? "success" : "danger");
+      cancelNotice.textContent = message;
+    }
+
+    function showToast(message, type = "success"){
+      const toast = document.createElement("div");
+      toast.className = `notice ${type === "success" ? "success" : "danger"}`;
+      toast.style.position = "fixed";
+      toast.style.left = "50%";
+      toast.style.bottom = "96px";
+      toast.style.transform = "translateX(-50%)";
+      toast.style.zIndex = "120";
+      toast.style.width = "min(calc(100% - 24px), 540px)";
+      toast.style.boxShadow = "0 24px 60px rgba(0,0,0,.35)";
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.transition = ".28s ease";
+        toast.style.opacity = "0";
+        toast.style.transform = "translateX(-50%) translateY(10px)";
+      }, 2600);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    function setDateLimits(){
+      const today = new Date();
+      const min = today.toISOString().split("T")[0];
+      const max = "2026-12-31";
+      bookingDate.min = min;
+      bookingDate.max = max;
+      bookingDate.value = min;
+      state.selectedDate = min;
+    }
+
+    function hydrateLastBooking(){
+      try{
+        const last = localStorage.getItem(LAST_BOOKING_KEY);
+        if(!last) return;
+        const booking = JSON.parse(last);
+        if(booking && booking.id && !booking.cancelled){
+          reservationCode.textContent = booking.id;
+          waConfirmLink.href = buildWhatsAppMessage(booking);
+          reservationResult.style.display = "flex";
+        }
+      }catch(e){}
+    }
+
+    clientPhone.addEventListener("input", e => {
+      e.target.value = formatPhone(e.target.value);
+      updateSummary();
+    });
+
+    clientName.addEventListener("input", updateSummary);
+    bookingNotes.addEventListener("input", updateSummary);
+    bookingDate.addEventListener("change", e => {
+      state.selectedDate = e.target.value;
+      state.selectedTime = "";
+      renderSlots();
+      updateSummary();
+    });
+
+    confirmBookingBtn.addEventListener("click", saveBooking);
+    cancelBookingBtn.addEventListener("click", cancelBooking);
+
+    copyCodeBtn.addEventListener("click", async () => {
+      const code = reservationCode.textContent.trim();
+      if(!code) return;
+      try{
+        await navigator.clipboard.writeText(code);
+        showToast("Código copiado.", "success");
+      }catch(e){
+        showToast("Não foi possível copiar o código.", "danger");
+      }
+    });
+
+    document.querySelectorAll(".reveal").forEach(el => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            entry.target.classList.add("show");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {threshold: 0.12});
+      observer.observe(el);
+    });
+
+    setDateLimits();
+    renderBookingServices();
+    renderPros();
+    renderSlots();
+    updateSummary();
+    hydrateLastBooking();
+  </script>
+</body>
+</html>
